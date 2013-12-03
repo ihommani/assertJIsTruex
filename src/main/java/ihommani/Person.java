@@ -2,8 +2,8 @@ package ihommani;
 
 import java.util.Map;
 
+import com.beust.jcommander.internal.Maps;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Maps;
 
 /**
  * Base class representing a person
@@ -32,10 +32,11 @@ public class Person {
 	 */
 	public void meet(Person otherPerson) {
 		Preconditions.checkNotNull(otherPerson, "You cannot meet nobody!");
-		this.addRelation(otherPerson, RelationType.FRIEND);
+		this.relations.put(otherPerson, RelationType.FRIEND);
 		// Friendship is reflexive
-        otherPerson.addRelation(this, RelationType.FRIEND);
-	}
+		Map<Person, RelationType> otherPersonRelations = otherPerson.getRelations();
+		otherPersonRelations.put(this, RelationType.FRIEND);
+	}	
 
 	/**
 	 * To create a person, we need a mother and a father
@@ -71,7 +72,7 @@ public class Person {
 		return son;
 	}
 	
-	public void addRelation(Person person, RelationType relationType){
+	private void addRelation(Person person, RelationType relationType){
 		Map<Person, RelationType> myRelations = this.getRelations();
 		myRelations.put(person, relationType);		
 	}
@@ -107,5 +108,10 @@ public class Person {
 
 	public void setRelations(Map<Person, RelationType> relations) {
 		this.relations = relations;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("Person [firstName=%s, lastName=%s, sexe=%s, relations=%s]", firstName, lastName, sexe, relations);
 	}
 }
