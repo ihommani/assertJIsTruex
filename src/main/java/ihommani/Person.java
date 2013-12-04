@@ -32,11 +32,10 @@ public class Person {
 	 */
 	public void meet(Person otherPerson) {
 		Preconditions.checkNotNull(otherPerson, "You cannot meet nobody!");
-		this.relations.put(otherPerson, RelationType.FRIEND);
+		this.addRelation(otherPerson, RelationType.FRIEND);
 		// Friendship is reflexive
-		Map<Person, RelationType> otherPersonRelations = otherPerson.getRelations();
-		otherPersonRelations.put(this, RelationType.FRIEND);
-	}	
+        otherPerson.addRelation(this, RelationType.FRIEND);
+	}
 
 	/**
 	 * To create a person, we need a mother and a father
@@ -72,7 +71,7 @@ public class Person {
 		return son;
 	}
 	
-	private void addRelation(Person person, RelationType relationType){
+	public void addRelation(Person person, RelationType relationType){
 		Map<Person, RelationType> myRelations = this.getRelations();
 		myRelations.put(person, relationType);		
 	}
@@ -108,10 +107,5 @@ public class Person {
 
 	public void setRelations(Map<Person, RelationType> relations) {
 		this.relations = relations;
-	}
-
-	@Override
-	public String toString() {
-		return String.format("Person [firstName=%s, lastName=%s, sexe=%s, relations=%s]", firstName, lastName, sexe, relations);
 	}
 }
