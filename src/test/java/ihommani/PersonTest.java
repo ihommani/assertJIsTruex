@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package ihommani;
 
 import java.util.Map;
@@ -51,6 +50,13 @@ public class PersonTest {
 		 * Killer feature Custom assertions, check friendship links (could have been family links)
 		 */
         ProjectAssertions.assertThat(bart).isFriendWith(lisa);
+
+        /*
+		 * Killer feature: automatic custom assertion generation for POJO
+		 */
+		PersonAssert.assertThat(bart).hasFirstName("bart");
+		PersonAssert.assertThat(bart).hasSexe(Sexe.MASC);
+
     }
 
     @Test
